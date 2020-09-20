@@ -207,7 +207,8 @@ namespace G
 	{
 		blocks 	= capacity/block_size;
 		sets	= blocks/assoc;
-		offset 	= log(block_size)/log(2);
+		lines   = log2(block_size/1024); //Sinashan: Byte addressable
+		offset 	= ceil(log2(blocks)) + lines; //Sinashan: Previously -> log(block_size)/log(2)
 		index 	= log(sets)/log(2);
 		tag 	= 32 - offset - index;
 
@@ -249,7 +250,7 @@ namespace G
 			{
 				break;
 			}
-
+///////////////continue from here: find a way to get address and block size separately
 			/*Store hex address as a bitset in the storage vector*/
 			memory.push_back(hexToBin(line));
 
@@ -268,10 +269,14 @@ namespace G
 	{
 		stringstream ss;
 		unsigned int n;
+		unsigned int m; //Sinashan: A variable to store int address from the file
+
+		m = stoll(s); //Sinashan: String to long long (as addresses are too large for either int or long
 
 		/*Send the string as hex to the stream*/
-		ss << hex << s;
+		ss << hex << m;
 		ss >> n;
+
 
 		/*Construct bitset out of parsed int*/
 		bitset<32> b(n);
