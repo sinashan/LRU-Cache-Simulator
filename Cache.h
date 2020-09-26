@@ -101,7 +101,7 @@ class Cache {
 		Cache(int& C, int& b, int& N);
 		~Cache();
 
-		void readMemory();
+		void readMemory(); //Sinashan: Different file names for different workloads
 		void testMem();
 };
 }

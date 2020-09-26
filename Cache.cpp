@@ -207,9 +207,8 @@ namespace G
 	{
 		blocks 	= capacity/block_size;
 		sets	= blocks/assoc;
-		lines   = log2(block_size/1024); //Sinashan: Byte addressable
-		offset 	= ceil(log2(blocks)) + lines; //Sinashan: Previously -> log(block_size)/log(2)
-		index 	= log(sets)/log(2);
+		offset 	= log2(block_size); //Sinashan: Previously -> log(block_size)/log(2)
+		index = log2(capacity/(block_size*assoc));
 		tag 	= 32 - offset - index;
 
 		hits	= 0;
@@ -250,7 +249,6 @@ namespace G
 			{
 				break;
 			}
-///////////////continue from here: find a way to get address and block size separately
 			/*Store hex address as a bitset in the storage vector*/
 			memory.push_back(hexToBin(line));
 
